@@ -1,31 +1,24 @@
 {
-    "name": "Jetstream",
-    "dockerComposeFile": "./docker-compose.yml",
-    "service": "workspace",
-    "workspaceFolder": "/var/www",
-
-    "remoteEnv": {
-        "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolderBasename}"
-    },
-
-    "remoteUser": "vscode",
-
-    "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
-    },
-
-    "forwardPorts": [80, 443, 8080, 8081],
-
-    "extensions": [
-		"ms-azuretools.vscode-docker",
-        "mrmlnc.vscode-apache",
+  "name": "jetstream",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "extensions": [
         "bmewburn.vscode-intelephense-client",
-        "robberphex.php-debug",
-		"mtxr.sqltools",
-		"mtxr.sqltools-driver-mysql",
-		"mtxr.sqltools-driver-pg",
-		"mtxr.sqltools-driver-sqlite"
-	],
-
-    "postCreateCommand": "docker --version && echo \"postCreateCommand\""
+        "esbenp.prettier-vscode",
+        "mblode.twig-language-2",
+        "moetelo.twiggy",
+        "MrChetan.phpstorm-parameter-hints-in-vscode",
+        "aaron-bond.better-comments",
+        "usernamehw.errorlens",
+        "xabikos.JavaScriptSnippets",
+        "christian-kohler.path-intellisense",
+        "rexshi.phpdoc-comment-vscode-plugin",
+        "MehediDracula.php-namespace-resolver"
+      ]
+    }
+  }
 }

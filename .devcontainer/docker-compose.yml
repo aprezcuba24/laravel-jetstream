@@ -1,71 +1,67 @@
-version: '3.7'
-
 services:
-  workspace:
+  dev:
     build:
-      context: ./docker/workspace
-      dockerfile: Dockerfile
-      args:
-        - PHP_VERSION=8.2
-        - USERNAME=${REMOTE_USER}
-        - USER_UID=${USER_UID}
-        - USER_GID=${USER_GID}
-    env_file: ../.env
-    ports:
-      - "80:80"
-      - "443:443"
-      - "3000:3000"
-      - "3306:3306"
-      - "5432:5432"
-      - "6379:6379"
-      - "8080:8080"
-      - "8081:8081"
-      - "27017:27017"
-    init: true
-    volumes:
-      # Forwards the local Docker socket to the container.
-      - /var/run/docker.sock:/var/run/docker-host.sock 
-      - ../:/var/www
-    working_dir: /var/www
-    entrypoint: /usr/local/share/docker-init.sh
+      context: ..
+      dockerfile: DockerFile
     command: sleep infinity
-
-  php:
-    build:
-      context: ./docker/php
-      dockerfile: Dockerfile
-      args:
-        - PHP_VERSION=8.2
-        - USERNAME=${REMOTE_USER}
-        - USER_UID=${USER_UID}
-        - USER_GID=${USER_GID}
-        - XDEBUG_REMOTE_CONNECT_BACK=${XDEBUG_REMOTE_CONNECT_BACK}
-        - XDEBUG_REMOTE_PORT=${XDEBUG_REMOTE_PORT}
-    env_file: ../.env
     volumes:
-      - ../:/var/www
-    working_dir: /var/www
-    network_mode: service:workspace
+      - ../.:/workspace
+    env_file:
+      - ../.env
+    ports:
+      - 8001:8000
+    # Configure environment variables
+    environment:
+      XDEBUG_CONFIG: "client_host=127.0.0.1 client_port=9003"
+      PHP_IDE_CONFIG: "serverName=${APP_NAME}"
+      MAILER_DSN: "smtp://maildev:1025"
+      DATABASE_URL: "mysql://root:${DB_PASSWORD}@db_server:3306/${DB_DATABASE}?serverVersion=11.2.4-MariaDB&charset=utf8mb4"
 
-  postgres:
-    build: ./docker/postgres
-    env_file: ../.env
-    volumes:
-      - postgres:/var/lib/postgresql/data
-
-  pgadmin:
-    image: dpage/pgadmin4
+  db_server:
+    image: mariadb:11.2
     restart: always
     ports:
-      - "8888:80"
+      - "33016:3306"
     environment:
-      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
-      PGADMIN_DEFAULT_PASSWORD: strong-password
+      MARIADB_ROOT_PASSWORD: root
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8101:80
+    env_file:
+      - ../.env
+    environment:
+      PMA_HOST: db_server
+
+  maildev:
+    image: maildev/maildev
+    ports:
+      - "1081:1080"
+      - "1026:1025"
+    env_file:
+      - ../.env
+
+  redis:
+    image: redis:8-alpine
+    ports:
+      - '6379:6379'
+    env_file:
+      - ../.env
+
+  redis-insight:
+    image: redis/redisinsight:latest
+    restart: always
+    ports:
+      - "5540:5540"
+    volumes:
+      - redis-insight:/data
+    env_file:
+      - ../.env
 
 volumes:
-  postgres:
-    driver: local
-  pgadmin-data:
-    driver: local
+  db_data:
+  redis-insight:

@@ -81,6 +81,30 @@
                 @endif
             @endif
         </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="identifier" value="{{ __('Identifier') }}" />
+            <x-input id="identifier" type="text" class="mt-1 block w-full" wire:model="state.identifier" required autocomplete="identifier" />
+            <x-input-error for="identifier" class="mt-2" />
+        </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="phone_number" value="{{ __('Phone Number') }}" />
+            <x-input id="phone_number" type="text" class="mt-1 block w-full" wire:model="state.phone_number" required autocomplete="phone_number" />
+            <x-input-error for="phone_number" class="mt-2" />
+        </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="identity_card" value="{{ __('Identity Card') }}" />
+            <x-input id="identity_card" type="text" class="mt-1 block w-full" wire:model="state.identity_card" required autocomplete="identity_card" />
+            <x-input-error for="identity_card" class="mt-2" />
+        </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="date_of_birth" value="{{ __('Date of Birth') }}" />
+            <x-input id="date_of_birth" type="date" class="mt-1 block w-full" wire:model="state.date_of_birth" required autocomplete="date_of_birth" />
+            <x-input-error for="date_of_birth" class="mt-2" />
+        </div>
     </x-slot>
 
     <x-slot name="actions">

@@ -29,6 +29,26 @@
                 <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>
 
+            <div class="mt-4">
+                <x-label for="identifier" value="{{ __('Identifier') }}" />
+                <x-input id="identifier" class="block mt-1 w-full" type="text" name="identifier" :value="old('identifier')" required autofocus autocomplete="identifier" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="phone_number" value="{{ __('Phone Number') }}" />
+                <x-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="old('phone_number')" required autofocus autocomplete="phone_number" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="identity_card" value="{{ __('Identity Card') }}" />
+                <x-input id="identity_card" class="block mt-1 w-full" type="text" name="identity_card" :value="old('identity_card')" required autofocus autocomplete="identity_card" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="date_of_birth" value="{{ __('Date of Birth') }}" />
+                <x-input id="date_of_birth" class="block mt-1 w-full" type="date" name="date_of_birth" :value="old('date_of_birth')" required autofocus autocomplete="date_of_birth" />
+            </div>
+
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
                     <x-label for="terms">

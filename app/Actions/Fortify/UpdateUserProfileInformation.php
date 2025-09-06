@@ -10,6 +10,8 @@ use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
+    use UserFields;
+
     /**
      * Validate and update the given user's profile information.
      *
@@ -18,7 +20,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update(User $user, array $input): void
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            ...$this->validateUserFields(),
+            'identifier' => ['required', 'numeric', Rule::unique('users')->ignore($user->id)],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
@@ -32,8 +35,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
-                'name' => $input['name'],
+                ...$this->updateUserFields($input),
                 'email' => $input['email'],
+                'identifier' => $input['identifier'],
             ])->save();
         }
     }
@@ -46,8 +50,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     protected function updateVerifiedUser(User $user, array $input): void
     {
         $user->forceFill([
-            'name' => $input['name'],
+            ...$this->updateUserFields($input),
             'email' => $input['email'],
+            'identifier' => $input['identifier'],
             'email_verified_at' => null,
         ])->save();
 

@@ -28,6 +28,11 @@ class UsersTable extends DataTableComponent
             Column::make("Email", "email")
                 ->sortable()
                 ->searchable(),
+            Column::make("Age", "age")
+                ->label(fn($row) => $row->age)
+                ->sortable(function($query, $direction) {
+                    return $query->orderBy('date_of_birth', $direction === 'asc' ? 'desc' : 'asc');
+                }),
             Column::make("Identifier", "identifier")
                 ->sortable(),
             Column::make("Phone number", "phone_number")

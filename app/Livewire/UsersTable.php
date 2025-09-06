@@ -23,15 +23,19 @@ class UsersTable extends DataTableComponent
             Column::make("Id", "id")
                 ->sortable(),
             Column::make("Name", "name")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Email", "email")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Identifier", "identifier")
                 ->sortable(),
             Column::make("Phone number", "phone_number")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Identity card", "identity_card")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Date of birth", "date_of_birth")
                 ->sortable(),
             Column::make("Created at", "created_at")

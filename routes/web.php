@@ -15,5 +15,8 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/users', UsersTable::class)->name('users');
+    Route::get('/users', UsersTable::class)
+        ->name('users')
+        ->middleware('role:Admin')
+    ;
 });

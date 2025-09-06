@@ -12,7 +12,9 @@ class UsersTable extends DataTableComponent
 
     public function configure(): void
     {
-        $this->setPrimaryKey('id');
+        $this->setPrimaryKey('id')
+            ->setLayout('livewire.user-table')
+        ;
     }
 
     public function columns(): array

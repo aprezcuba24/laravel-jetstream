@@ -77,4 +77,9 @@ class User extends Authenticatable
     {
         return Carbon::parse($this->date_of_birth)->age;
     }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
 }

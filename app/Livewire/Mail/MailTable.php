@@ -20,7 +20,11 @@ class MailTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Mail::query()->where('user_id', auth()->id());
+        $query = Mail::query();
+        if (!auth()->user()->hasRole('Admin')) {
+            $query->where('user_id', auth()->id());
+        }
+        return $query;
     }
 
 

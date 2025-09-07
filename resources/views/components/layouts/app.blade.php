@@ -9,7 +9,11 @@
 @section('content')
   <div class="py-2">
     <div class="p-4 bg-white dark:bg-gray-800 overflow-hidden shadow-xl">
-      @yield('component')
+      @hasSection('component')
+        @yield('component')
+      @else
+        {{ $slot ?? '' }}
+      @endif
     </div>
   </div>
 @endsection

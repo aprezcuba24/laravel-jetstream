@@ -24,15 +24,28 @@ class MailTable extends DataTableComponent
         if (!auth()->user()->hasRole('Admin')) {
             $query->where('user_id', auth()->id());
         }
-        return $query;
+        return $query->with('user:id,name');
     }
 
 
     public function columns(): array
     {
+        $user = auth()->user();
+        $columns = [];
+        if ($user->hasRole('Admin')) {
+            $columns[] = Column::make("User", "user_id")
+                // ->label(fn($row) => $row->user->name)
+            ;
+        }
+
         return [
             Column::make("Id", "id")
                 ->sortable(),
+            ...$columns,
+            Column::make("Subject", "subject"),
+            Column::make("To", "to"),
+            Column::make("Body", "body"),
+            Column::make("Status", "status"),
             Column::make("Created at", "created_at")
                 ->sortable(),
             Column::make("Updated at", "updated_at")

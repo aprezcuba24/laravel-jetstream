@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mail extends Model
 {
-    protected $fillable = ['subject', 'body', 'to', 'user_id'];
+    protected $fillable = ['subject', 'body', 'to', 'user_id', 'status'];
 
     protected $casts = [
         'status' => MailStatus::class,

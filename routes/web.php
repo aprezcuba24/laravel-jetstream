@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Mail\MailTable;
 use App\Livewire\UsersTable;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,8 @@ Route::middleware([
     Route::get('/users', UsersTable::class)
         ->name('users')
         ->middleware('role:Admin')
+    ;
+    Route::get('/mails', MailTable::class)
+        ->name('mails')
     ;
 });

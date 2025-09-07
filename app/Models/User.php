@@ -36,6 +36,7 @@ class User extends Authenticatable
         'phone_number',
         'identity_card',
         'date_of_birth',
+        'city_id',
     ];
 
     /**
@@ -76,5 +77,10 @@ class User extends Authenticatable
     public function getAgeAttribute()
     {
         return Carbon::parse($this->date_of_birth)->age;
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
     }
 }

@@ -105,6 +105,12 @@
             <x-input id="date_of_birth" type="date" class="mt-1 block w-full" wire:model="state.date_of_birth" required autocomplete="date_of_birth" />
             <x-input-error for="date_of_birth" class="mt-2" />
         </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="city_id" value="{{ __('City') }}" />
+            <livewire:city-selector wire:model="state.city_id" />
+            <x-input-error for="city_id" class="mt-2" />
+        </div>
     </x-slot>
 
     <x-slot name="actions">

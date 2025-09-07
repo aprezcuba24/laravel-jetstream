@@ -9,7 +9,7 @@ use Livewire\Component;
 class AutocompleteSelect extends Component
 {
     public $model;
-    public $searchField;
+    public $searchField = 'name';
 
     #[Modelable]
     public $value = '';
@@ -21,12 +21,13 @@ class AutocompleteSelect extends Component
     #[Reactive]
     public $dependsValue;
 
-    public function mount($model, $searchField = 'name', $dependsOn = null, $dependsValue = null)
+    public function mount()
     {
-        $this->model = $model;
-        $this->searchField = $searchField;
-        $this->dependsOn = $dependsOn;
-        $this->dependsValue = $dependsValue;
+        if ($this->value) {
+            $model = $this->model::find($this->value);
+            $this->selectedLabel = $model->{$this->searchField};
+            $this->query = $this->selectedLabel;
+        }
     }
 
     public function updatedQuery()

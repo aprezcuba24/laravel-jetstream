@@ -14,6 +14,17 @@ class CitySelector extends Component
 
     protected $listeners = ['selected'];
 
+    public function mount()
+    {
+        $this->countryId = null;
+        $this->stateId = null;
+        if ($this->value) {
+            $model = \App\Models\City::find($this->value);
+            $this->stateId = $model->state_id;
+            $this->countryId = $model->state->country_id;
+        }
+    }
+
     public function selected($model, $id)
     {
         if ($model === \App\Models\Country::class) {

@@ -48,6 +48,11 @@
                 <x-label for="date_of_birth" value="{{ __('Date of Birth') }}" />
                 <x-input id="date_of_birth" class="block mt-1 w-full" type="date" name="date_of_birth" :value="old('date_of_birth')" required autofocus autocomplete="date_of_birth" />
             </div>
+            
+            <div class="mt-4">
+                <x-label for="city_id" value="{{ __('City') }}" />
+                <livewire:city-selector wire:model="state.city_id" />
+            </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">

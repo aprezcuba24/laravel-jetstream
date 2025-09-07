@@ -5,8 +5,6 @@
         placeholder="Find..."
         wire:model.live.debounce.300ms="query"
     />
-    dependsOn: {{ $dependsOn }}
-    dependsValue: {{ $dependsValue }}
     @if(!empty($this->results))
         <ul class="absolute z-10 w-full bg-white border rounded mt-1 max-h-60 overflow-y-auto">
             @foreach($this->results as $row)

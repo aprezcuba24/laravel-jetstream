@@ -17,4 +17,12 @@
             @endforeach
         </ul>
     @endif
+    @if($value)
+        <input
+            type="hidden"
+            name="{{ strtolower(class_basename($model)) }}_id"
+            id="{{ strtolower(class_basename($model)) }}_id"
+            value="{{ $value }}"
+        >
+    @endif
 </div>
